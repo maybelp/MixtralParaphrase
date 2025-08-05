@@ -1,0 +1,10 @@
+torch
+transformers
+datasets
+evaluate
+huggingface_hub
+peft
+nltk
+tqdm
+pandas
+matplotlib

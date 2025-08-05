@@ -1,0 +1,41 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*.so
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# PyCharm
+.idea/
+
+# Cache and logs
+*.log
+*.out
+*.bak
+.cache/
+__pypackages__/
+*.tmp
+*.temp
+
+# Data outputs
+*.csv
+*.tsv
+*.parquet
+*.zip
+*.tar.gz
+*.h5
+*.pt
+
+# Hugging Face
+~/.cache/huggingface/
+*.safetensors
+
+# VSCode settings (optional)
+.vscode/
