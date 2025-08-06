@@ -77,17 +77,26 @@ def paraphrase_spanish_phrase(generator, phrase, k=3, max_new_tokens=100):
 
 def generate_augmented_dataset(generator, dataset, k=1, batch_size=8):
     sources, targets = [], []
+
     for i in tqdm(range(0, len(dataset), batch_size), desc="Generating paraphrases"):
         batch = dataset.select(range(i, min(i + batch_size, len(dataset))))
-        for row in batch:
-            es, qu = row["es"], row["qu"]
-            try:
-                para_es_list = paraphrase_spanish_phrase(generator, es, k=k)
-            except Exception:
-                para_es_list = [es] * k
-            for p in para_es_list:
+        es_list = [row["es"] for row in batch]
+        qu_list = [row["qu"] for row in batch]
+
+        try:
+            paraphrased_batch = []
+            for phrase in es_list:
+                para_es_list = paraphrase_spanish_phrase(generator, phrase, k=k)
+                paraphrased_batch.append(para_es_list)
+        except Exception:
+            # In case of error, fall back to repeating the original sentence
+            paraphrased_batch = [[phrase] * k for phrase in es_list]
+
+        for para_list, qu in zip(paraphrased_batch, qu_list):
+            for p in para_list:
                 sources.append(p)
                 targets.append(qu)
+
     return Dataset.from_dict({"source": sources, "target": targets})
 
 
